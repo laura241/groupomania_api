@@ -1,16 +1,11 @@
-const express = require("express");
-const mysql = require("mysql");
-const jwt = require("express-jwt");
-const cors = require("cors");
-const bodyParser = require("body-parser");
-const userRoutes = require("./routes/user");
-const path = require("path");
+const express = require('express');
+const bodyParser = require('body-parser');
+const userRoutes = require('./routes/user');
 
-//Initialisation of the app
 const app = express();
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
@@ -22,36 +17,24 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/images", express.static(path.join(__dirname, "images")));
-
+//Configuration of the application
 app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
-    extended: true,
+    extended: false,
   })
 );
-app.use(cors());
 
-const mysqlConnection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  port: 8889,
-  password: "root",
-  database: "groupomania_bdd",
-  multipleStatements: true,
-});
+app.use('/api/auth', userRoutes);
 
-mysqlConnection.connect(function (err) {
-  if (err) throw err;
-  console.log("Connected!");
-});
+const db = require('./config/db');
 
-app.use((req, res) => {
-  res.json({
-    message: "Votre requête a bien été reçue",
+db.sequelize
+  .sync({
+    force: false,
+  })
+  .then(() => {
+    console.log("Drop and Resync with {force: true}");
   });
-});
-
-app.use("/api/auth", userRoutes);
 
 module.exports = app;
