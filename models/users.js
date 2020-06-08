@@ -6,11 +6,11 @@ module.exports = (sequelize, Sequelize) => {
       primaryKey: true,
       autoIncrement: true
     },
-    last_name: {
+    lastName: {
       type: Sequelize.STRING(40),
       allowNull: false
     },
-    first_name: {
+    firstName: {
       type: Sequelize.STRING(20),
       allowNull: false
     },
@@ -19,16 +19,16 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false,
       unique: true
     },
-    gp_service: {
+    gpService: {
       type: Sequelize.STRING(20),
       allowNull: false
     },
-    gp_login: {
+    gpLogin: {
       type: Sequelize.STRING(20),
       allowNull: false
     },
-    gp_password: {
-      type: Sequelize.STRING(20),
+    gpPassword: {
+      type: Sequelize.STRING(),
       allowNull: false
     }
 

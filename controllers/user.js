@@ -1,18 +1,21 @@
 const db = require('../config/db');
 const User = db.users;
+const bcrypt = require('bcrypt');
+
 
 
 exports.signup = (req, res) => {
-  const userForm = req.body.userForm
+  const userForm = req.body
+  bcrypt.hash(userForm.gpPassword,10).then(hash => {
   User.create({
-      last_name: userForm.last_name,
-      first_name: userForm.first_name,
-      gp_service: userForm.gp_service,
+      lastName: userForm.lastName,
+      firstName: userForm.firstName,
+      gpService: userForm.gpService,
       email: userForm.email,
-      gp_login: userForm.login,
-      gp_password: userForm.gp_password
+      gpLogin: userForm.gpLogin,
+      gpPassword: hash})
     }).then(user => {
-      res.send(user);
+      res.status(201).json({message:'User created !'});
     })
     .catch(err => {
       res.status(500).send("Error ->" + err)
@@ -20,9 +23,25 @@ exports.signup = (req, res) => {
 };
 
 
+exports.login = (req, res) => {
+  const gpLogin = req.body.gpLogin;
+  const email = req.body.gpEmail;
+  if(gpLogin && email) {
+    db.query ('SELECT * FROM users WHERE gpLogin = ? AND gpPassword = ?', [gpLogin, gpPassword], function(error, results, fields){
+      if (results.length > 0) {
+				response.redirect('http://localhost:8080/Home');
+			} else {
+				response.send('Incorrect Username and/or Password!');
+			}			
+			response.end();
+		});
+    }else{
+      response.send('Please enter Login and Password!');
+      response.end();
+    }
+   
 
-
-exports.login = (req, res) => {};
+};
 
 exports.getUserAccount = (req, res) => {};
 
