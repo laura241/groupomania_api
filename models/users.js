@@ -19,14 +19,6 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false,
       unique: true
     },
-    gpService: {
-      type: Sequelize.STRING(20),
-      allowNull: false
-    },
-    gpLogin: {
-      type: Sequelize.STRING(20),
-      allowNull: false
-    },
     gpPassword: {
       type: Sequelize.STRING(),
       allowNull: false

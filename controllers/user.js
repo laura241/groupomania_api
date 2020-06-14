@@ -11,15 +11,16 @@ exports.signup = (req, res) => {
       User.create({
         lastName: userForm.lastName,
         firstName: userForm.firstName,
-        gpService: userForm.gpService,
         email: userForm.email,
-        gpLogin: userForm.gpLogin,
         gpPassword: hash,
       });
     })
     .then((user) => {
-      res.status(201).json({
-        message: "User created !",
+      res.status(201).send({
+        message: 'User created!',
+        user: {
+          user
+        },
       });
     })
     .catch((err) => {
@@ -28,46 +29,50 @@ exports.signup = (req, res) => {
 };
 
 exports.login = (req, res) => {
-  const gpLogin = req.body.gpLogin;
-  const email = req.body.gpEmail;
-  if (gpLogin && email) {
-    db.query(
-      "SELECT * FROM users WHERE gpLogin = ? AND gpPassword = ?",
-      [gpLogin, gpPassword],
-      function (error, results, fields) {
-        if (results.length > 0) {
-          bcrypt
-            .compare(req.body.gpPassword, users.gpPassword)
-            .then((valid) => {
-              if (!valid) {
-                return res.status(401).json({
-                  error: "Mot de passe incorrect !",
-                });
-              }
-              res.status(200).json({
-                userId: userId,
-                token: jwt.sign(
-                  {
-                    userId: userId,
-                  },
-                  "RANDOM_TOKEN_SECRET",
-                  { expiresIn: "24h" }
-                ),
-              });
-            })
-            .catch((error) =>
-              res.status(500).json({
-                error,
-              })
-            );
-          response.redirect("http://localhost:8080/Home");
-        } else {
-          response.send("Incorrect Login and/or Password!");
+  const response = req.body;
+  const email = response.email;
+  const gpPassword = response.gpPassword;
+  if (email && gpPassword) {
+    User.findOne({
+        WHERE: {
+          email
         }
-      }.catch((error) => res.status(500).json({ error }))
-    );
+      })
+      .then(User => {
+        if (!User) {
+          return res.status(401).json({
+            error: 'Utilisateur non trouvé!'
+          });
+        }
+        bcrypt.compare(gpPassword, User.gpPassword)
+          .then(valid => {
+            if (!valid) {
+              return res.status(401).json({
+                error: 'Mot de passe incorrect!'
+              });
+            }
+            res.status(200).json({
+              token: jwt.sign({
+                userId: User.userId
+              }, 'RANDOM_TOKEN_SECRET', {
+                expiresIn: '2h'
+              })
+            });
+          })
+          .catch(error => res.status(500).json({
+            error
+          }));
+      })
+      .catch(error => res.status(500).json({
+        error
+      }));
   }
 };
+
+
+
+
+
 
 exports.getUserAccount = (req, res) => {};
 
