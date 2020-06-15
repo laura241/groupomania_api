@@ -70,11 +70,17 @@ exports.login = (req, res) => {
 };
 
 
-
-
-
-
-exports.getUserAccount = (req, res) => {};
+exports.getUserAccount = (req, res) => {
+  User.findOne({
+      WHERE: {
+        email
+      }
+    })
+    .then(User => res.status(200).json(User))
+    .catch(error => res.status(404).json({
+      error
+    }))
+};
 
 exports.modifyUserAccount = (req, res) => {};
 
