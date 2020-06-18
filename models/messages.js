@@ -1,23 +1,17 @@
 /* jshint indent: 2 */
 
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('messages', {
+module.exports = (sequelize, Sequelize) => {
+  const Message = sequelize.define('message', {
     messageId: {
-      type: DataTypes.INTEGER(11).UNSIGNED.ZEROFILL,
+      type: Sequelize.INTEGER(11).UNSIGNED.ZEROFILL,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
     message: {
-      type: DataTypes.TEXT,
+      type: Sequelize.TEXT,
       allowNull: false
     },
-    active: {
-      type: DataTypes.INTEGER(1),
-      allowNull: true,
-      defaultValue: '0'
-    }
-  }, {
-    tableName: 'messages'
-  });
+  })
+  return Message;
 };

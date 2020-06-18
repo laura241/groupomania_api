@@ -20,7 +20,7 @@ module.exports = (sequelize, Sequelize) => {
       unique: true
     },
     gpPassword: {
-      type: Sequelize.STRING(),
+      type: Sequelize.STRING(255),
       allowNull: false
     }
 

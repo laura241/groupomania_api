@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const userRoutes = require('./routes/user');
+const messageRoutes = require('./routes/message');
 const helmet = require('helmet')
 
 const app = express();
@@ -30,6 +31,7 @@ app.use(
 
 
 app.use('/api/auth', userRoutes);
+app.use('/api/messages', messageRoutes);
 
 const db = require('./config/db');
 
