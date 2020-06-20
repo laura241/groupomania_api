@@ -84,7 +84,19 @@ exports.login = (req, res) => {
 };
 
 
-exports.getUserAccount = (req, res) => {};
+exports.getUserAccount = (req, res) => {
+  User.findOne({
+      userId: req.params.userId
+    })
+    .then(users => {
+      res.status(200).send(users);
+    })
+    .catch(error => {
+      res.status(404).send({
+        message: 'User not found'
+      });
+    });
+};
 
 exports.modifyUserAccount = (req, res) => {};
 
