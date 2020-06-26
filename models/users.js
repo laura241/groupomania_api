@@ -22,8 +22,11 @@ module.exports = (sequelize, Sequelize) => {
     gpPassword: {
       type: Sequelize.STRING(255),
       allowNull: false
-    }
+    },
 
   })
+
   return User;
+
+
 }

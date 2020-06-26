@@ -5,6 +5,9 @@ const sequelize = new Sequelize(env.database, env.username, env.password, {
   dialect: env.dialect,
   port: 8889,
   logging: false,
+  define: {
+    timestamps: false
+  }
 });
 
 sequelize

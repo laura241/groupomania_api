@@ -12,6 +12,14 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.TEXT,
       allowNull: false
     },
+    userId: {
+      type: Sequelize.INTEGER,
+      references: {
+        model: 'users',
+        key: 'userId'
+      }
+    },
   })
+
   return Message;
 };
