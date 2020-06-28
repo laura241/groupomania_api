@@ -1,11 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
-const auth = require('../middlewares/auth')
-
+const {
+    authJwt
+} = require("../middlewares")
 const messageCtrl = require("../controllers/message");
 
-router.post("/messages", auth, messageCtrl.newPost);
+
+router.post("/messages", [authJwt.verifyToken], messageCtrl.newPost);
+router.get("/messages", [authJwt.verifyToken], messageCtrl.getAllMessages);
 
 
 module.exports = router;

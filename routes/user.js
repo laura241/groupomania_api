@@ -1,17 +1,20 @@
 const express = require("express");
 const router = express.Router();
+const {
+    verifySignUp
+} = require('../middlewares')
 
-const auth = require("../middlewares/auth");
 const userCtrl = require("../controllers/user");
 const {
     userValidationRules,
     validate
 } = require("../middlewares/validation");
 
-router.post("/signup", userValidationRules(), validate, userCtrl.signup);
+
+router.post("/signup", [verifySignUp.checkDuplicateEmail], userValidationRules(), validate, userCtrl.signup);
 router.post("/login", userCtrl.login);
-router.get("/:userId", auth, userCtrl.getUserAccount);
-router.put("/user/:userId", auth, userCtrl.modifyUserAccount);
-router.delete("/user/:userId", auth, userCtrl.deleteUserAccount);
+router.get("/:userId", userCtrl.getUserAccount);
+router.put("/user/:userId", userCtrl.modifyUserAccount);
+router.delete("/user/:userId", userCtrl.deleteUserAccount);
 
 module.exports = router;

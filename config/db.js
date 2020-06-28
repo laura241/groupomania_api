@@ -34,4 +34,12 @@ db.sequelize = sequelize;
 db.users = require("../models/users")(sequelize, Sequelize);
 db.messages = require("../models/messages")(sequelize, Sequelize);
 
+db.users.belongsToMany(db.messages, {
+  through: "user_messages",
+  foreignKey: "userId",
+  otherKey: "rmessageId"
+});
+
+db.ROLES = ["user", "admin", "moderator"];
+
 module.exports = db;
