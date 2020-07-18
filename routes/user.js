@@ -13,8 +13,9 @@ const {
 
 router.post("/signup", [verifySignUp.checkDuplicateEmail], userValidationRules(), validate, userCtrl.signup);
 router.post("/login", userCtrl.login);
-router.get("/:userId", userCtrl.getUserAccount);
-router.put("/user/:userId", userCtrl.modifyUserAccount);
-router.delete("/user/:userId", userCtrl.deleteUserAccount);
+router.get("/users", userCtrl.getAllUsers);
+router.get("/users/:userId", userCtrl.getUserAccount);
+router.put("/users/:userId", userCtrl.modifyUserAccount);
+router.delete("/users/:userId", userCtrl.deleteUserAccount);
 
 module.exports = router;

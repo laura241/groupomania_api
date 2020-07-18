@@ -19,7 +19,18 @@ module.exports = (sequelize, Sequelize) => {
         key: 'userId'
       }
     },
-  })
+    createdAt: {
+      type: 'TIMESTAMP',
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      allowNull: false
+    },
+    updatedAt: {
+      type: 'TIMESTAMP',
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      allowNull: false
+    },
+
+  }, )
 
   return Message;
 };

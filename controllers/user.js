@@ -61,7 +61,7 @@ exports.login = (req, res) => {
                 userId: User.userId,
                 token: jwt.sign({
                   userId: User.userId
-                }, "RANDOM_TOKEN_SECRET", {
+                }, 'RANDOM_TOKEN_SECRET', {
                   expiresIn: "2h",
                 }),
               })
@@ -83,8 +83,8 @@ exports.getUserAccount = (req, res) => {
   User.findOne({
       userId: req.body.userId,
     })
-    .then((users) => {
-      res.status(200).send(users);
+    .then((user) => {
+      res.status(200).send(user);
     })
     .catch((error) => {
       res.status(404).send({
@@ -92,6 +92,20 @@ exports.getUserAccount = (req, res) => {
       });
     });
 };
+
+
+exports.getAllUsers = (req, res) => {
+  User.findAll()
+    .then(users => {
+      return res.status(200).send(users)
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error occured",
+      });
+    });
+}
+
 
 exports.modifyUserAccount = (req, res) => {};
 
