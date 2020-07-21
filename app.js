@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const userRoutes = require('./routes/user');
-const messageRoutes = require('./routes/message');
+const postRoutes = require('./routes/post');
+
 const cors = require('cors');
 
 const app = express();
@@ -27,7 +28,7 @@ app.use(
 
 
 app.use('/api/auth', userRoutes);
-app.use('/api', messageRoutes);
+app.use('/api', postRoutes);
 
 const db = require('./config/db');
 

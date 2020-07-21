@@ -1,9 +1,9 @@
 const db = require("../config/db");
-const Message = db.messages;
+const Post = db.posts;
 
 exports.newPost = (req, res) => {
-  Message.create({
-      message: req.body.message,
+  Post.create({
+      post: req.body.post,
       userId: req.body.userId,
     })
     .then(() => {
@@ -18,10 +18,15 @@ exports.newPost = (req, res) => {
     });
 };
 
-exports.getAllMessages = (req, res) => {
-  Message.findAll()
-    .then(messages => {
-      return res.status(200).send(messages)
+exports.getAllPosts = (req, res) => {
+  Post.findAll({
+      include: [{
+        model: db.users,
+        required: true
+      }]
+    })
+    .then(posts => {
+      return res.status(200).send(posts)
     })
     .catch((err) => {
       return res.status(500).send({

@@ -1,23 +1,14 @@
-/* jshint indent: 2 */
-
 module.exports = (sequelize, Sequelize) => {
-  const Message = sequelize.define('message', {
-    messageId: {
+  const Post = sequelize.define('post', {
+    postId: {
       type: Sequelize.INTEGER(11).UNSIGNED.ZEROFILL,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
-    message: {
+    post: {
       type: Sequelize.TEXT,
       allowNull: false
-    },
-    userId: {
-      type: Sequelize.INTEGER,
-      references: {
-        model: 'users',
-        key: 'userId'
-      }
     },
     createdAt: {
       type: 'TIMESTAMP',
@@ -32,5 +23,5 @@ module.exports = (sequelize, Sequelize) => {
 
   }, )
 
-  return Message;
+  return Post;
 };

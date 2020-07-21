@@ -32,13 +32,17 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.users = require("../models/users")(sequelize, Sequelize);
-db.messages = require("../models/messages")(sequelize, Sequelize);
+db.posts = require("../models/posts")(sequelize, Sequelize);
 
-db.users.belongsToMany(db.messages, {
-  through: "user_messages",
-  foreignKey: "userId",
-  otherKey: "rmessageId"
-});
+
+db.users.hasMany(db.posts, {
+  foreignKey: 'userId'
+})
+db.posts.belongsTo(db.users, {
+  foreignKey: 'userId'
+})
+
+
 
 db.ROLES = ["user", "admin", "moderator"];
 
