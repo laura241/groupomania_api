@@ -22,8 +22,9 @@ exports.getAllPosts = (req, res) => {
   Post.findAll({
       include: [{
         model: db.users,
-        required: true
-      }]
+        required: true,
+      }],
+
     })
     .then(posts => {
       return res.status(200).send(posts)

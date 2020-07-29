@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const userRoutes = require('./routes/user');
 const postRoutes = require('./routes/post');
+const commentRoutes = require('./routes/comment');
 
 const cors = require('cors');
 
@@ -29,6 +30,7 @@ app.use(
 
 app.use('/api/auth', userRoutes);
 app.use('/api', postRoutes);
+app.use('/api', commentRoutes);
 
 const db = require('./config/db');
 
