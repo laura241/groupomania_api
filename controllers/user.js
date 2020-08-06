@@ -97,15 +97,21 @@ exports.getUserAccount = (req, res) => {
 
 
 exports.getAllUsers = (req, res) => {
-  User.findAll()
-    .then(users => {
-      return res.status(200).send(users)
+  User.findAll({
+      include: [{
+        model: db.posts,
+        include: [{
+          model: db.comments
+        }]
+      }]
     })
-    .catch((err) => {
-      return res.status(500).send({
-        message: err.message || "Some error occured",
-      });
-    });
+    .then(users => {
+      res.json(users)
+
+    })
+    .catch((error) => {
+      res.status(404).send
+    })
 }
 
 
