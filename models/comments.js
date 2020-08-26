@@ -20,6 +20,11 @@ module.exports = (sequelize, Sequelize) => {
             defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
             allowNull: false
         },
+        isPublic: {
+            type: Sequelize.ENUM,
+            values: ['true', 'false'],
+            defaultValue: 'false'
+        },
 
     }, )
 

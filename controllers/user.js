@@ -59,6 +59,7 @@ exports.login = (req, res) => {
               .json({
                 firstName: User.firstName,
                 userId: User.userId,
+                role: User.role,
                 token: jwt.sign({
                   userId: User.userId
                 }, 'RANDOM_TOKEN_SECRET', {
@@ -115,7 +116,19 @@ exports.getAllUsers = (req, res) => {
 }
 
 
-exports.modifyUserAccount = (req, res) => {};
+exports.modifyUserAccount = (req, res) => {
+  User.update({
+      role: req.body.role
+    }, {
+      where: {
+        userId: req.params.id
+      }
+    })
+    .then(count => {
+      console.log('Rows updated' + count)
+    })
+};
+
 
 exports.deleteUserAccount = (req, res) => {
   User.findOne({

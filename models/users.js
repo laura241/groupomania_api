@@ -21,7 +21,8 @@ module.exports = (sequelize, Sequelize) => {
     },
     role: {
       type: Sequelize.ENUM,
-      values: ['user', 'admin', 'disabled']
+      values: ['user', 'admin', 'disabled'],
+      defaultValue: 'user'
     },
     gpPassword: {
       type: Sequelize.STRING(255),

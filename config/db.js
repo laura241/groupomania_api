@@ -4,7 +4,7 @@ const sequelize = new Sequelize(env.database, env.username, env.password, {
   host: env.host,
   dialect: env.dialect,
   port: 8889,
-  logging: false,
+  logging: true,
   define: {
     timestamps: false
   }
@@ -55,7 +55,5 @@ db.posts.belongsTo(db.users, {
 })
 
 
-
-db.ROLES = ["user", "admin", "moderator"];
 
 module.exports = db;

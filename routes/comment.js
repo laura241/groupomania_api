@@ -8,5 +8,4 @@ const commentCtrl = require("../controllers/comment");
 
 router.post("/comments", [authJwt.verifyToken], commentCtrl.newComment);
 
-
 module.exports = router;
