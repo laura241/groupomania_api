@@ -23,17 +23,12 @@ exports.newPost = async (req, res) => {
 exports.getAllAdminPosts = (req, res) => {
   Post.findAll({
       where: {
-        isPublic: 'false'
+        isPublic: 'false',
       },
       include: [{
-          model: db.users,
-          required: true,
-        },
-        {
-          model: db.comments,
-          required: false,
-        },
-      ],
+        model: db.users,
+        required: true,
+      }, ],
     })
     .then((posts) => {
       console.log(posts);
@@ -58,6 +53,9 @@ exports.getAllPosts = (req, res) => {
         {
           model: db.comments,
           required: false,
+          include: [{
+            model: db.users
+          }]
         },
       ],
     })
@@ -74,13 +72,16 @@ exports.getAllPosts = (req, res) => {
 
 exports.getLastPosts = (req, res) => {
   Post.findAll({
+      where: {
+        isPublic: 'true'
+      },
       include: [{
           model: db.users,
-          required: true,
+          required: false,
         },
         {
           model: db.comments,
-          required: true,
+          required: false,
         },
       ],
       order: [
@@ -117,7 +118,7 @@ exports.modifyPost = (req, res) => {
 
 
 exports.deletePost = async (req, res) => {
-  const deletePOst = await Post.destroy({
+  const deletePost = await Post.destroy({
     where: {
       postId: req.params.id
     }
