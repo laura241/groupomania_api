@@ -9,5 +9,6 @@ const commentCtrl = require("../controllers/comment");
 router.post("/comments", [authJwt.verifyToken], commentCtrl.newComment);
 router.put('/comments/:id', [authJwt.verifyToken], commentCtrl.modifyComment);
 router.delete("/comments/:id", [authJwt.verifyToken], commentCtrl.deleteComment);
+router.get("/comments/admin", [authJwt.verifyToken], commentCtrl.getAllAdminComments);
 
 module.exports = router;

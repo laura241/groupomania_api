@@ -28,7 +28,13 @@ exports.getAllAdminPosts = (req, res) => {
       include: [{
         model: db.users,
         required: true,
-      }, ],
+      }, {
+        model: db.comments,
+        required: false,
+        where: {
+          isPublic: 'false'
+        }
+      }],
     })
     .then((posts) => {
       console.log(posts);

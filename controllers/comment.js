@@ -47,4 +47,31 @@ exports.deleteComment = async (req, res) => {
     return res.status(500).json({
         message: 'the comment has been deleted'
     });
-}
+};
+
+exports.getAllAdminComments = (req, res) => {
+    Comment.findAll({
+            where: {
+                isPublic: 'false',
+            },
+            include: [{
+                    model: db.users,
+                    required: false,
+                },
+                {
+                    model: db.posts,
+                    required: false
+
+                }
+            ],
+        })
+        .then((comments) => {
+            console.log(comments);
+            return res.status(200).send(comments);
+        })
+        .catch((err) => {
+            return res.status(500).send({
+                message: err.message || "Some error occured",
+            });
+        });
+};
