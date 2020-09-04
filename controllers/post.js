@@ -5,19 +5,17 @@ const {
 } = require("sequelize");
 
 exports.newPost = async (req, res) => {
-  const newPost = await Post.create({
-    post: req.body.post,
-    title: req.body.title,
-    link: req.body.link,
-    userId: req.body.userId,
-  });
-  await newPost.reload({
-    include: [{
-      model: db.users,
-      required: true,
-    }, ],
-  });
-  return res.status(500).send(newPost);
+  try {
+    await Post.create({
+      post: req.body.post,
+      title: req.body.title,
+      link: req.body.link,
+      userId: req.body.userId,
+    });
+    return res.status(200).send();
+  } catch (e) {
+    return res.status(500).send(e);
+  }
 };
 
 exports.getAllAdminPosts = (req, res) => {
@@ -59,6 +57,9 @@ exports.getAllPosts = (req, res) => {
         {
           model: db.comments,
           required: false,
+          where: {
+            isPublic: 'true'
+          },
           include: [{
             model: db.users
           }]

@@ -15,14 +15,38 @@ exports.newComment = async (req, res) => {
         },
         include: [{
             model: db.users,
-            required: true,
+            required: false,
         }, {
             model: db.comments,
             required: false,
+            include: [{
+                model: db.users,
+                required: false,
+            }]
         }],
     })
     return res.send(post)
 };
+
+
+exports.getCommentsByUser = (req, res) => {
+    Comment.findAll({
+            where: {
+                userId: req.params.id
+            },
+        })
+        .then((comments) => {
+            console.log(comments);
+            return res.status(200).send(comments);
+        })
+        .catch((err) => {
+            return res.status(500).send({
+                message: err.message || "Some error occured",
+            });
+        });
+};
+
+
 
 exports.modifyComment = (req, res) => {
     Comment.update({

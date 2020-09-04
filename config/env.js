@@ -1,5 +1,5 @@
 const env = {
-    database: 'groupomania_bdd',
+    database: 'groupomania_prod',
     username: 'root',
     password: 'root',
     host: 'localhost',

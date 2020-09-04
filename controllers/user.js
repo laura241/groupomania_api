@@ -102,9 +102,10 @@ exports.getAllUsers = (req, res) => {
       include: [{
         model: db.posts,
         include: [{
-          model: db.comments
+          model: db.comments,
         }]
-      }]
+      }],
+
     })
     .then(users => {
       res.json(users)
