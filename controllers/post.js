@@ -80,15 +80,21 @@ exports.getAllPosts = (req, res) => {
 exports.getLastPosts = (req, res) => {
   Post.findAll({
       where: {
-        isPublic: 'true'
+        isPublic: 'true',
       },
       include: [{
           model: db.users,
-          required: false,
+          required: true,
         },
         {
           model: db.comments,
           required: false,
+          where: {
+            isPublic: 'true'
+          },
+          include: [{
+            model: db.users
+          }]
         },
       ],
       order: [
